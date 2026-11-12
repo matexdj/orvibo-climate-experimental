@@ -2,7 +2,7 @@
 from pathlib import Path
 import hashlib,json,ssl,unittest
 R=Path(__file__).resolve().parents[1]
-C=R/'custom_components/orvibo_cloud'
+C=R/'custom_components/orvibo_climate_experimental'
 class HACSReviewTests(unittest.TestCase):
  def test_hostname_and_certificate(self):
   s=(C/'binary.py').read_text()

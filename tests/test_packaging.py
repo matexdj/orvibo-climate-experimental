@@ -20,15 +20,15 @@ class PackagingTests(unittest.TestCase):
 
     def test_manifest_metadata(self):
         m = json.loads(
-            (ROOT / "custom_components/orvibo_cloud/manifest.json").read_text()
+            (ROOT / "custom_components/orvibo_climate_experimental/manifest.json").read_text()
         )
-        self.assertEqual(m["domain"], "orvibo_cloud")
-        self.assertEqual(m["version"], "1.3.2")
+        self.assertEqual(m["domain"], "orvibo_climate_experimental")
+        self.assertEqual(m["version"], "0.1.0")
         self.assertEqual(m["integration_type"], "hub")
 
     def test_hacs_metadata(self):
         h = json.loads((ROOT / "hacs.json").read_text())
-        self.assertEqual(h["name"], "ORVIBO Cloud")
+        self.assertEqual(h["name"], "ORVIBO Climate Experimental")
         self.assertTrue(h["render_readme"])
 
 

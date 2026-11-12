@@ -1,6 +1,18 @@
 # Validation status and limitations
 
-## Automated checks for v1.3.2
+## Review build 0.1.0
+
+The manual ZIP was unpacked into an empty temporary directory. The unpacked
+component compiled and passed all 29 tests using the repository test harness.
+The manifest, folder and runtime domain use `orvibo_climate_experimental`.
+On November 12, 2026, the exact ZIP was manually installed on a fresh Home
+Assistant OS virtual machine running Core 2026.11.1. HomeMate sign-in and setup
+completed with only the two virtual AC remotes selected. The Daikin and BAXI
+both appeared as climate entities and their controls opened in the frontend.
+The user confirmed that both physical units responded from the fresh VM.
+Marketplace installation remains pending. See [installation guide](INSTALL.md).
+
+## Automated checks inherited from upstream
 
 The GitHub Actions workflow `.github/workflows/validate.yml` runs:
 
@@ -9,7 +21,7 @@ The GitHub Actions workflow `.github/workflows/validate.yml` runs:
 - **Hassfest Validation** using `home-assistant/actions/hassfest@master`.
 - **Packaging and Python checks** for manifest structure, HACS metadata,
   repository layout, version formatting, and Python compilation, plus TLS and
-  listener regression tests. The suite contains 16 tests.
+  listener regression tests.
 
 For local verification, run:
 

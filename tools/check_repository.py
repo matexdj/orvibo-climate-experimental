@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static publication checks for the ORVIBO Cloud HACS repository."""
+"""Static publication checks for the ORVIBO Climate Experimental HACS repository."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DOMAIN = "orvibo_cloud"
+DOMAIN = "orvibo_climate_experimental"
 EXPECTED_FIELDS = {"domain", "name", "codeowners", "documentation", "issue_tracker", "version"}
 
 
@@ -25,11 +25,12 @@ def inspect_repository(root: Path = ROOT) -> list[str]:
     manifest_path = must_exist(f"custom_components/{DOMAIN}/manifest.json")
     hacs_path = must_exist("hacs.json")
     for rel in ("README.md", "LICENSE", ".github/workflows/validate.yml",
-                "custom_components/orvibo_cloud/__init__.py",
-                "custom_components/orvibo_cloud/brand/icon.png",
-                "custom_components/orvibo_cloud/orvibo_server_ca.pem",
-                "custom_components/orvibo_cloud/translations/en.json",
-                "HACS_PUBLISHING.md", "VALIDATION.md"):
+                "custom_components/orvibo_climate_experimental/__init__.py",
+                "custom_components/orvibo_climate_experimental/brand/icon.png",
+                "custom_components/orvibo_climate_experimental/orvibo_server_ca.pem",
+                "custom_components/orvibo_climate_experimental/translations/en.json",
+                "INSTALL.md", "CONTRIBUTING.md",
+                "VALIDATION.md"):
         must_exist(rel)
 
     if manifest_path.is_file():
@@ -55,15 +56,15 @@ def inspect_repository(root: Path = ROOT) -> list[str]:
     if hacs_path.is_file():
         try:
             hacs = json.loads(hacs_path.read_text(encoding="utf-8"))
-            if hacs.get("name") != "ORVIBO Cloud":
-                errors.append("HACS display name should be ORVIBO Cloud")
+            if hacs.get("name") != "ORVIBO Climate Experimental":
+                errors.append("HACS display name should be ORVIBO Climate Experimental")
             if hacs.get("zip_release") is True:
                 errors.append("HACS zip_release must remain unset; source archives are used")
         except (ValueError, UnicodeError) as err:
             errors.append(f"Invalid HACS manifest JSON: {err}")
 
-    strings = root / "custom_components/orvibo_cloud/strings.json"
-    english = root / "custom_components/orvibo_cloud/translations/en.json"
+    strings = root / "custom_components/orvibo_climate_experimental/strings.json"
+    english = root / "custom_components/orvibo_climate_experimental/translations/en.json"
     if strings.exists() and english.exists():
         if json.loads(strings.read_text()) != json.loads(english.read_text()):
             errors.append("English translation fallback is out of sync")
@@ -82,4 +83,4 @@ if __name__ == "__main__":
         print("FAIL:", issue, file=sys.stderr)
     if issues:
         raise SystemExit(1)
-    print("PASS: ORVIBO Cloud static HACS packaging checks")
+    print("PASS: ORVIBO Climate Experimental static HACS packaging checks")
