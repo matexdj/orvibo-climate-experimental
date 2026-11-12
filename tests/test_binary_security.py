@@ -71,6 +71,13 @@ class TLSConnectionTests(unittest.TestCase):
                 "-extfile", "server.ext", "-out", f"{name}-server.pem",
             )
         cls.ca = cls.root / "trusted.pem"
+        cls.client_cert = cls.root / "client.pem"
+        cls.client_key = cls.root / "client.key"
+        openssl(
+            "req", "-x509", "-newkey", "rsa:2048", "-nodes", "-days", "2",
+            "-subj", "/CN=ORVIBO test client", "-keyout", str(cls.client_key),
+            "-out", str(cls.client_cert), "-addext", "extendedKeyUsage=clientAuth",
+        )
         cls.fingerprint = hashlib.sha256(
             ssl.PEM_cert_to_DER_cert(cls.ca.read_text())
         ).hexdigest()
@@ -119,6 +126,8 @@ class TLSConnectionTests(unittest.TestCase):
         ) as address:
             raw = socket.create_connection(address, timeout=5)
             with (
+                patch.object(binary, "_CERT_PATH", self.client_cert),
+                patch.object(binary, "_KEY_PATH", self.client_key),
                 patch.object(binary, "_PINNED_SERVER_CA", self.ca),
                 patch.object(binary, "_PINNED_SERVER_CA_SHA256", self.fingerprint),
                 patch.object(binary, "_SERVER_CA_DIRECTORY", self.root / "absent"),
@@ -150,6 +159,8 @@ class TLSConnectionTests(unittest.TestCase):
     def test_changed_pinned_ca_fails_before_network_connection(self):
         client = binary.OrviboBinaryClient("localhost", "test", "test", "test")
         with (
+            patch.object(binary, "_CERT_PATH", self.client_cert),
+            patch.object(binary, "_KEY_PATH", self.client_key),
             patch.object(binary, "_PINNED_SERVER_CA", self.ca),
             patch.object(binary.socket, "create_connection") as connection,
             self.assertRaisesRegex(binary.OrviboBinaryError, "fingerprint mismatch"),
@@ -212,3 +223,4 @@ class CaptureRetryTests(unittest.TestCase):
             client.capture_events(threading.Event(), MagicMock())
         self.assertTrue(caught.exception.auth_rejected)
         self.assertEqual(caught.exception.stage, "login")
+
