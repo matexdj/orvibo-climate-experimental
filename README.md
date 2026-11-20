@@ -1,5 +1,7 @@
 <img width="512" height="512" alt="logo" src="https://github.com/user-attachments/assets/10a03183-279c-44c6-9bff-c0eaab6959f2" />
 
+> **Distribution withdrawn — November 20, 2026.** ORVIBO support declined permission to redistribute the legacy TLS client certificate and private key and reported no approved self-service channel for obtaining them. Both files have been removed from this fork's published branch histories. This source is retained for development and test records. A fresh installation cannot connect to ORVIBO Cloud using this source alone. The response did not announce service shutdown or credential revocation. Use a fresh clone and coordinate migration of unpublished work before pushing from an older checkout.
+
 # ORVIBO Cloud
 
 A custom Home Assistant integration for ORVIBO Cloud devices, including
