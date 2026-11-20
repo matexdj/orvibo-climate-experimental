@@ -1,5 +1,7 @@
 # ORVIBO Climate Experimental
 
+> **Distribution withdrawn — November 20, 2026.** ORVIBO support declined permission to redistribute the legacy TLS client certificate and private key and reported no approved self-service channel for obtaining them. Both files have been removed from this fork's published branch histories. This source is retained for development and test records. A fresh installation cannot connect to ORVIBO Cloud using this source alone. The response did not announce service shutdown or credential revocation. Use a fresh clone and coordinate migration of unpublished work before pushing from an older checkout.
+
 [v0.1.0 release notes](RELEASE_NOTES_0.1.0.md)
 
 If this integration helps you, you can support its development on [Buy Me a Coffee](https://buymeacoffee.com/matexdj).
